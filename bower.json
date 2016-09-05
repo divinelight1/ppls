@@ -1,0 +1,20 @@
+{
+  "name": "ppls",
+  "authors": [
+    "divinelight1 <aldinmujkic44@gmail.com>"
+  ],
+  "description": "phonebook",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.6.1"
+  }
+}
