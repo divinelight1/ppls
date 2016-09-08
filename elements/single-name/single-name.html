@@ -12,9 +12,23 @@
 		list-style: none;
 		width: 100%;
 	}
-	paper-item{
-		
+	paper-item{		
 		text-transform: capitalize;
+	}
+	.details{
+		padding: 10px 0 10px 30px;
+    	border-bottom: 1px solid;
+	}
+	.detailItem{
+		padding: 7px 0;
+	}
+	.title{
+		font-weight: bold;
+		color: #07ABA0;
+	}
+	paper-button{
+		text-align: center !important;
+    	width: 87%;
 	}
 </style>
 	<template>
@@ -28,9 +42,13 @@
 		</template>
 		{{task.name}} {{task.surname}}
 	</paper-item>
-	<iron-collapse id="collapse">
-  <div>Content goes here...</div>
-</iron-collapse>
+	<iron-collapse role="listbox" id="collapse">
+  		<div class="details">
+  		<p class="detailItem"><span class="title">Telephone:</span> {{task.telephone}}</p>
+  		<p class="detailItem"><span class="title">Email:</span> {{task.email}}</p>
+		<paper-button toggles class="custom green">Edit Contact</paper-button>
+		</div>
+	</iron-collapse>
 	</li>
 	</template>
 	<script>

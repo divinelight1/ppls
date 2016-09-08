@@ -1,0 +1,70 @@
+<link rel="import" href="../../import-elements.html">
+<link rel="import" href="../single-name/single-name.html">
+<link rel="import" href="../all-names/all-names.html">
+
+<dom-module id="friend-names">
+<style is="custom-style">
+
+	body {
+		/* No margin on body so toolbar can span the screen */
+		margin: 0;
+	}
+    app-toolbar {
+	    /* Toolbar is the main header, so give it some color */
+	    background-color: #1E88E5;
+	    font-family: 'Roboto', Helvetica, sans-serif;
+	    color: white;
+	    --app-toolbar-font-size: 24px;
+    }
+    .paper-item-link {
+    	color: inherit;
+    	text-decoration: none;
+    }
+    ul{
+    	padding-left: 0;
+    }
+	paper-fab{
+		position: absolute;
+    	right: 10px;
+    	bottom: 10px;
+    	background: #07ABA0;
+	}
+</style>
+<template>
+
+
+			<ul>
+				<template is="dom-repeat" items="{{contacts}}">
+					<single-name task="{{item}}"></single-name>
+				</template>
+			</ul>
+			
+        	
+</template>
+<script>
+
+	Polymer ({
+		is : 'friend-names',
+
+		// togglePanel: function() {
+		// 	this.$.paper_drawer_panel.togglePanel();
+		// },
+		// properties : {
+		// 	title : {
+		// 		type : String,
+		// 		value : 'PPls'
+		// 	},
+		// 	contacts : {
+		// 		type : Array,
+		// 		notify : true,
+		// 		value: function (){
+		// 			return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldin.mujkic44@gmail.com', avatar : false, favourite : false, friend : true},
+		// 				{name: 'anes', surname : 'hasicic', telephone : '061837588', email : 'aldin.mujkic44@gmail.com', avatar : true, favourite : true, friend : true},
+		// 				{name: 'zekerijah', surname : 'sehic', telephone : '062463175', email : 'zekerijahsehic@gmail.com', avatar : false, favourite : true, friend : false}];
+		// 		}
+		// 	}
+		// }
+
+	})
+</script>
+</dom-module>
