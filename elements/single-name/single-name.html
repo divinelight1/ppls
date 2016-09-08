@@ -1,15 +1,44 @@
 <import rel="../../import-elements.html">
 
-<dom-module id="single-item">
-	<style>
-	
-	</style>
+<dom-module id="single-name">
+<style>
+	.avatar{
+		width: 50px;
+		border-radius:100px;
+		
+	}
+	li{
+		margin-bottom: 10px;
+		list-style: none;
+		width: 100%;
+	}
+	paper-item{
+		
+		text-transform: capitalize;
+	}
+</style>
 	<template>
+	<li>
+	<paper-item on-click="_collapseInfo">
+		<template is="dom-if" if="{{task.avatar}}">
+			<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_male_dark_on_clear_200x200.png">
+		</template>
+		<template is="dom-if" if="{{!task.avatar}}">
+			<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_female_dark_on_clear_200x200.png">
+		</template>
+		{{task.name}} {{task.surname}}
+	</paper-item>
+	<iron-collapse id="collapse">
+  <div>Content goes here...</div>
+</iron-collapse>
+	</li>
 	</template>
 	<script>
 		Polymer ({
-			is : 'single-item',
-			properties :{},
-			})
+			is : 'single-name',
+			_collapseInfo : function(){
+				this.$.collapse.toggle();
+			}
+		})
 	</script>
 </dom-module>
