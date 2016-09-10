@@ -28,6 +28,10 @@
     "app-router": "^2.7.1",
     "iron-collapse": "PolymerElements/iron-collapse#^1.2.1",
     "paper-button": "PolymerElements/paper-button#^1.0.13",
-    "paper-fab": "PolymerElements/paper-fab#^1.2.0"
+    "paper-fab": "PolymerElements/paper-fab#^1.2.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.18",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.2.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.0"
   }
 }

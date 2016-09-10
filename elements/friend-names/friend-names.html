@@ -32,7 +32,7 @@
 </style>
 <template>
 
-
+			<!-- loop names template -->
 			<ul>
 				<template is="dom-repeat" items="{{contacts}}">
 					<single-name task="{{item}}"></single-name>
@@ -45,25 +45,12 @@
 
 	Polymer ({
 		is : 'friend-names',
-
-		// togglePanel: function() {
-		// 	this.$.paper_drawer_panel.togglePanel();
-		// },
-		// properties : {
-		// 	title : {
-		// 		type : String,
-		// 		value : 'PPls'
-		// 	},
-		// 	contacts : {
-		// 		type : Array,
-		// 		notify : true,
-		// 		value: function (){
-		// 			return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldin.mujkic44@gmail.com', avatar : false, favourite : false, friend : true},
-		// 				{name: 'anes', surname : 'hasicic', telephone : '061837588', email : 'aldin.mujkic44@gmail.com', avatar : true, favourite : true, friend : true},
-		// 				{name: 'zekerijah', surname : 'sehic', telephone : '062463175', email : 'zekerijahsehic@gmail.com', avatar : false, favourite : true, friend : false}];
-		// 		}
-		// 	}
-		// }
+		properties : {
+			contacts : {
+				type : Array,
+				notify : true
+			}
+		}
 
 	})
 </script>

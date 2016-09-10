@@ -29,6 +29,15 @@
     	bottom: 10px;
     	background: #07ABA0;
 	}
+	paper-toggle-button.pink {
+    --paper-toggle-button-checked-bar-color:  var(--paper-pink-500);
+    --paper-toggle-button-checked-button-color:  var(--paper-pink-500);
+    --paper-toggle-button-checked-ink-color: var(--paper-pink-500);
+    --paper-toggle-button-unchecked-bar-color:  var(--paper-indigo-900);
+    --paper-toggle-button-unchecked-button-color:  var(--paper-indigo-900);
+    --paper-toggle-button-unchecked-ink-color: var(--paper-indigo-900);
+  }
+
 </style>
 <template>
 
@@ -38,6 +47,7 @@
 			<paper-toolbar>
 				<div>Menu</div>
 			</paper-toolbar>
+			<!-- sidebar content  -->
 			<div>
 				<a class="paper-item-link" href="home" tabindex="-1">
   					<paper-item raised>All Contacts</paper-item>
@@ -51,7 +61,7 @@
 				
 			</div>
 		</paper-header-panel>
-
+		<!-- main content -->
 		<paper-header-panel main>
 			<paper-toolbar>
 				<paper-icon-button icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
@@ -60,13 +70,26 @@
 				<paper-icon-button icon="search" style="color: white; width: 50px;"></paper-icon-button>
 			</paper-toolbar>
 			<div>  
+			<!-- loop template for all names -->
 			<ul>
 				<template is="dom-repeat" items="{{contacts}}">
-					<single-name task="{{item}}"></single-name>
+					<single-name contact="{{item}}"></single-name>
 				</template>
 			</ul>
-			<paper-fab icon="add" title="add contact"></paper-fab>
-			<friend-names></friend-names>
+			<paper-fab icon="add" title="add contact" onclick="animated.open()"></paper-fab>
+				<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+  				<h2>Add New Contact</h2>
+  					<p><paper-input label="Name" value="{{addNew.name}}"></paper-input></p>
+  					<p><paper-input label="Last Name" value="{{addNew.surname}}"></paper-input></p>
+  					<p><paper-input label="Phone No." value="{{addNew.telephone}}"></paper-input></p>
+  					<p><paper-input label="E-mail" value="{{addNew.email}}"></paper-input></p>
+  					<p>Male<paper-toggle-button center horizontal checked="{{addNew.avatar}}" class="pink">Female</paper-toggle-button></p>
+    				<p>Add to:<br>
+    				<paper-checkbox checked="{{addNew.favourite}}" class="blue">Favourites</paper-checkbox><br>
+    				<paper-checkbox checked="{{addNew.friend}}" class="blue">Friends</paper-checkbox></p><br>
+   					<paper-button toggles class="custom green" on-tap="addName">Save</paper-button>
+				</paper-dialog>
+<friend-names></friend-names>
         	</div>
 
 		</paper-header-panel>
@@ -78,10 +101,6 @@
 
 	Polymer ({
 		is : 'all-names',
-
-		togglePanel: function() {
-			this.$.paper_drawer_panel.togglePanel();
-		},
 		properties : {
 			title : {
 				type : String,
@@ -93,10 +112,31 @@
 				value: function (){
 					return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldin.mujkic44@gmail.com', avatar : false, favourite : false, friend : true},
 						{name: 'anes', surname : 'hasicic', telephone : '061837588', email : 'aldin.mujkic44@gmail.com', avatar : true, favourite : true, friend : true},
-						{name: 'zekerijah', surname : 'sehic', telephone : '062463175', email : 'zekerijahsehic@gmail.com', avatar : false, favourite : true, friend : false}];
+						{name: 'zekerijah', surname : 'sehic', telephone : '062463175', email : 'zekerijahsehic@gmail.com', avatar : true, favourite : true, friend : false}];
 				}
-			}
-		}
+			},
+			addNew : {
+					type : Object,
+					notify : true,
+					value : {name: '', surname : '', telephone : '', email : '', avatar : true, favourite : false, friend : true}
+				}
+		},
+		toggleDialog: function() {
+            this.$.dialog.toggle();
+        },
+        addName : function(){
+        	this.push('contacts',{
+        		name : this.addNew.name,
+        		surname : this.addNew.surname,
+        		telephone : this.addNew.telephone,
+        		email : this.addNew.email,
+        		avatar : this.addNew.avatar,
+        		favourite : this.addNew.favourite,
+        		friend : this.addNew.friend
+        	})
+        	animated.close();
+        	console.log(this.contacts)
+        }
 
 	})
 </script>
