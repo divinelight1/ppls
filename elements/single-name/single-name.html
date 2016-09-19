@@ -46,7 +46,20 @@
   			<div class="details">
   				<p class="detailItem"><span class="title">Telephone:</span> {{contact.telephone}}</p>
   				<p class="detailItem"><span class="title">Email:</span> {{contact.email}}</p>
-				<paper-button toggles class="custom green">Edit Contact</paper-button>
+  				
+				<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+  				<h2>Add New Contact</h2>
+  					<p><paper-input label="Name" value="{{contact.name}}"></paper-input></p>
+  					<p><paper-input label="Last Name" value="{{contact.surname}}"></paper-input></p>
+  					<p><paper-input label="Phone No." value="{{contact.telephone}}"></paper-input></p>
+  					<p><paper-input label="E-mail" value="{{contact.email}}"></paper-input></p>
+  					<p>Male<paper-toggle-button center horizontal checked="{{contact.avatar}}" class="pink">Female</paper-toggle-button></p>
+    				<p>Add to:<br><br>
+    				<paper-checkbox checked="{{addNew.favourite}}" class="blue">Favourites</paper-checkbox><br>
+    				<paper-checkbox checked="{{addNew.friend}}" class="blue">Friends</paper-checkbox></p><br>
+   					<paper-button toggles class="custom green" on-tap="addName">Save</paper-button>
+				</paper-dialog>
+				<paper-button toggles class="custom green" on-click="_editTask">Edit Contact</paper-button>
 			</div>
 		</iron-collapse>
 	</li>
@@ -55,11 +68,17 @@
 		Polymer ({
 			is : 'single-name',
 			properties : {
-	
+				name : {
+					type : Object,
+					notify: true
+				}
 			},
 			_collapseInfo : function(){
 				this.$.collapse.toggle();
-			}
+			},
+			 _editTask: function() {
+                
+            }
 		})
 	</script>
 </dom-module>

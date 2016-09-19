@@ -36,6 +36,9 @@
     --paper-toggle-button-unchecked-bar-color:  var(--paper-indigo-900);
     --paper-toggle-button-unchecked-button-color:  var(--paper-indigo-900);
     --paper-toggle-button-unchecked-ink-color: var(--paper-indigo-900);
+    position: absolute;
+    right: 80px;
+    top: 392px;
   }
 
 </style>
@@ -77,19 +80,18 @@
 				</template>
 			</ul>
 			<paper-fab icon="add" title="add contact" onclick="animated.open()"></paper-fab>
-				<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+				<paper-dialog id="animated" with-backdrop>
   				<h2>Add New Contact</h2>
   					<p><paper-input label="Name" value="{{addNew.name}}"></paper-input></p>
   					<p><paper-input label="Last Name" value="{{addNew.surname}}"></paper-input></p>
   					<p><paper-input label="Phone No." value="{{addNew.telephone}}"></paper-input></p>
   					<p><paper-input label="E-mail" value="{{addNew.email}}"></paper-input></p>
   					<p>Male<paper-toggle-button center horizontal checked="{{addNew.avatar}}" class="pink">Female</paper-toggle-button></p>
-    				<p>Add to:<br>
+    				<p>Add to:<br><br>
     				<paper-checkbox checked="{{addNew.favourite}}" class="blue">Favourites</paper-checkbox><br>
     				<paper-checkbox checked="{{addNew.friend}}" class="blue">Friends</paper-checkbox></p><br>
    					<paper-button toggles class="custom green" on-tap="addName">Save</paper-button>
 				</paper-dialog>
-<friend-names></friend-names>
         	</div>
 
 		</paper-header-panel>
@@ -110,15 +112,13 @@
 				type : Array,
 				notify : true,
 				value: function (){
-					return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldin.mujkic44@gmail.com', avatar : false, favourite : false, friend : true},
-						{name: 'anes', surname : 'hasicic', telephone : '061837588', email : 'aldin.mujkic44@gmail.com', avatar : true, favourite : true, friend : true},
-						{name: 'zekerijah', surname : 'sehic', telephone : '062463175', email : 'zekerijahsehic@gmail.com', avatar : true, favourite : true, friend : false}];
+					return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldinmujkic44@gmail.com', avatar : true, favourite : true, friend : true}];
 				}
 			},
 			addNew : {
 					type : Object,
 					notify : true,
-					value : {name: '', surname : '', telephone : '', email : '', avatar : true, favourite : false, friend : true}
+					value : {name: '', surname : '', telephone : '', email : '', avatar : true, favourite : false, friend : false}
 				}
 		},
 		toggleDialog: function() {
@@ -134,6 +134,7 @@
         		favourite : this.addNew.favourite,
         		friend : this.addNew.friend
         	})
+        	this.addNew.name = 'rtshg';
         	animated.close();
         	console.log(this.contacts)
         }
