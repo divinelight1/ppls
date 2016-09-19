@@ -14,6 +14,8 @@
 	}
 	paper-item{		
 		text-transform: capitalize;
+		width: 80%;
+    	float: left;
 	}
 	.details{
 		padding: 10px 0 10px 30px;
@@ -30,38 +32,27 @@
 		text-align: center !important;
     	width: 87%;
 	}
+	paper-icon-button{
+		margin-top: 9px;
+	}
 </style>
 	<template>
 	<li>
-	<paper-item on-click="_collapseInfo">
-		<template is="dom-if" if="{{!contact.avatar}}">
-			<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_male_dark_on_clear_200x200.png">
-		</template>
-		<template is="dom-if" if="{{contact.avatar}}">
-			<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_female_dark_on_clear_200x200.png">
-		</template>
-		{{contact.name}} {{contact.surname}}
-	</paper-item>
-		<iron-collapse role="listbox" id="collapse">
-  			<div class="details">
-  				<p class="detailItem"><span class="title">Telephone:</span> {{contact.telephone}}</p>
-  				<p class="detailItem"><span class="title">Email:</span> {{contact.email}}</p>
-  				
-				<paper-dialog id="animated" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-  				<h2>Add New Contact</h2>
-  					<p><paper-input label="Name" value="{{contact.name}}"></paper-input></p>
-  					<p><paper-input label="Last Name" value="{{contact.surname}}"></paper-input></p>
-  					<p><paper-input label="Phone No." value="{{contact.telephone}}"></paper-input></p>
-  					<p><paper-input label="E-mail" value="{{contact.email}}"></paper-input></p>
-  					<p>Male<paper-toggle-button center horizontal checked="{{contact.avatar}}" class="pink">Female</paper-toggle-button></p>
-    				<p>Add to:<br><br>
-    				<paper-checkbox checked="{{addNew.favourite}}" class="blue">Favourites</paper-checkbox><br>
-    				<paper-checkbox checked="{{addNew.friend}}" class="blue">Friends</paper-checkbox></p><br>
-   					<paper-button toggles class="custom green" on-tap="addName">Save</paper-button>
-				</paper-dialog>
-				<paper-button toggles class="custom green" on-click="_editTask">Edit Contact</paper-button>
-			</div>
-		</iron-collapse>
+		<paper-item on-click="_collapseInfo">
+			<template is="dom-if" if="{{!contact.avatar}}">
+				<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_male_dark_on_clear_200x200.png">
+			</template>
+			<template is="dom-if" if="{{contact.avatar}}">
+				<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_female_dark_on_clear_200x200.png">
+			</template>
+			{{contact.name}} {{contact.surname}} 
+		</paper-item><paper-icon-button icon="delete" title="delete item" on-click="removeName"></paper-icon-button>
+			<iron-collapse role="listbox" id="collapse">
+  				<div class="details">
+  					<p class="detailItem"><span class="title">Telephone:</span> {{contact.telephone}}</p>
+  					<p class="detailItem"><span class="title">Email:</span> {{contact.email}}</p>
+				</div>
+			</iron-collapse>
 	</li>
 	</template>
 	<script>
@@ -76,9 +67,9 @@
 			_collapseInfo : function(){
 				this.$.collapse.toggle();
 			},
-			 _editTask: function() {
-                
-            }
+			removeName : function(e){
+				this.fire('remove', this.name)
+			}
 		})
 	</script>
 </dom-module>

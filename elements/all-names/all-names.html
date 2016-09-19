@@ -76,9 +76,10 @@
 			<!-- loop template for all names -->
 			<ul>
 				<template is="dom-repeat" items="{{contacts}}">
-					<single-name contact="{{item}}"></single-name>
+					<single-name contact="{{item}}" on-remove="deleteName"></single-name>
 				</template>
 			</ul>
+			<!-- add new name -->
 			<paper-fab icon="add" title="add contact" onclick="animated.open()"></paper-fab>
 				<paper-dialog id="animated" with-backdrop>
   				<h2>Add New Contact</h2>
@@ -137,6 +138,10 @@
         	this.addNew.name = 'rtshg';
         	animated.close();
         	console.log(this.contacts)
+        },
+        deleteName : function(e){
+        	var name = e.detail;
+        	this.splice('contacts', this.contacts.indexOf(name), 1);
         }
 
 	})
