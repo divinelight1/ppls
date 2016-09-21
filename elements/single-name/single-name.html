@@ -46,11 +46,26 @@
 				<img class="avatar" src="http://brandonmathis.com/projects/fancy-avatars/demo/images/avatar_female_dark_on_clear_200x200.png">
 			</template>
 			{{contact.name}} {{contact.surname}} 
-		</paper-item><paper-icon-button icon="delete" title="delete item" on-click="removeName"></paper-icon-button>
+		</paper-item>
+
+		<paper-icon-button icon="delete" title="delete item" onclick="modal.open()"></paper-icon-button>
+		<paper-dialog id="modal" modal>
+  			<h4>Do You Really Want To Delete This Contact</h4>
+  			<div class="buttons">
+  				<paper-button dialog-confirm autofocus>Cancel</paper-button>
+    			<paper-button on-click="removeName">Confirm</paper-button>
+  			</div>
+		</paper-dialog>
+
 			<iron-collapse role="listbox" id="collapse">
   				<div class="details">
   					<p class="detailItem"><span class="title">Telephone:</span> {{contact.telephone}}</p>
   					<p class="detailItem"><span class="title">Email:</span> {{contact.email}}</p>
+				
+				<paper-button raised onclick="editName.open()">open</paper-button>
+				<paper-dialog id="editName" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+  					<p><paper-input label="Name" value="{{name.name}}"></paper-input></p>
+				</paper-dialog>
 				</div>
 			</iron-collapse>
 	</li>
@@ -60,7 +75,7 @@
 			is : 'single-name',
 			properties : {
 				name : {
-					type : Object,
+					type : "Object",
 					notify: true
 				}
 			},
@@ -69,7 +84,10 @@
 			},
 			removeName : function(e){
 				this.fire('remove', this.name)
-			}
+			},
+			editName : function(){
+        	
+        }
 		})
 	</script>
 </dom-module>
