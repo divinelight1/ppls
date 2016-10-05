@@ -61,7 +61,11 @@
 				<a class="paper-item-link"  href="home" tabindex="-1">
   					<paper-item raised>Friends</paper-item>
 				</a>
-				
+				<select value="{{sortVal::change}}">  
+  <option value="allnames">all</option>
+  <option value="favourite">fav</option>
+  <option value="friends">fri</option>
+</select> 
 			</div>
 		</paper-header-panel>
 		<!-- main content -->
@@ -74,7 +78,8 @@
 				<paper-icon-button icon="search" style="color: white; width: 50px;" on-click="searchNames"></paper-icon-button>
 			</paper-toolbar>
 			<div>  
-			<template is="dom-repeat" items="{{contacts}}" filter="{{_filter(filterVal)}}" id="repeat">
+			
+			<template is="dom-repeat" items="{{contacts}}" filter="{{_sort(sortVal)}}" id="repeat">
 				<single-name contact="{{item}}" on-remove="deleteName" on-edit="_editName"></single-name>
 			</template>
 			<!-- add new name -->
@@ -169,6 +174,28 @@
     		if (!person) return false;
     		return (person.name && ~person.name.indexOf(val));
   			};
+		},
+		_sort : function(val){
+			switch(val){
+				case 'allnames' : 
+					return function(val){
+						return function(person) {
+    					if (!val) return true;
+    					if (!person) return false;
+    					return (person.name && ~person.name.indexOf(val));
+    					};
+					};
+				case 'favourite' : 
+					return function(contact){
+						if (!contact.favourite) return false;
+        				return contact.name && ~contact.name;
+					};
+				case 'friends' : 
+					return function(contact){
+						if (!contact.friend) return false;
+        				return contact.name && ~contact.name;
+					}
+			}
 		}
 		
 
