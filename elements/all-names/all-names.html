@@ -52,7 +52,7 @@
 			</paper-toolbar>
 			<!-- sidebar content  -->
 			<div>
-				<a class="paper-item-link" href="home" tabindex="-1">
+				<a class="paper-item-link" href="home" tabindex="-1" on-tap="_allContacts">
   					<paper-item raised>All Contacts</paper-item>
 				</a>
 				<a class="paper-item-link" href="home" tabindex="-1">
@@ -70,18 +70,16 @@
 				<paper-icon-button icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
 				<div class="title">{{title}}</div>
 				<span class="top" flex></span>
-				<paper-icon-button icon="search" style="color: white; width: 50px;"></paper-icon-button>
+				<paper-input label="click to search" hidden="true" id="search" value="{{filterVal::input}}"></paper-input>
+				<paper-icon-button icon="search" style="color: white; width: 50px;" on-click="searchNames"></paper-icon-button>
 			</paper-toolbar>
 			<div>  
-			<!-- loop template for all names -->
-			<ul>
-				<template is="dom-repeat" items="{{contacts}}">
-					<single-name contact="{{item}}" on-remove="deleteName"></single-name>
-				</template>
-			</ul>
+			<template is="dom-repeat" items="{{contacts}}" filter="{{_filter(filterVal)}}" id="repeat">
+				<single-name contact="{{item}}" on-remove="deleteName" on-edit="_editName"></single-name>
+			</template>
 			<!-- add new name -->
-			<paper-fab icon="add" title="add contact" onclick="animated.open()"></paper-fab>
-				<paper-dialog id="animated" with-backdrop>
+			<paper-fab icon="add" title="add contact" onclick="animatedd.open()"></paper-fab>
+				<paper-dialog id="animatedd" with-backdrop>
   				<h2>Add New Contact</h2>
   					<p><paper-input label="Name" value="{{addNew.name}}"></paper-input></p>
   					<p><paper-input label="Last Name" value="{{addNew.surname}}"></paper-input></p>
@@ -94,7 +92,7 @@
    					<paper-button toggles class="custom green" on-tap="addName">Save</paper-button>
 				</paper-dialog>
         	</div>
-
+        	
 		</paper-header-panel>
 
 	</paper-drawer-panel>
@@ -113,7 +111,7 @@
 				type : Array,
 				notify : true,
 				value: function (){
-					return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldinmujkic44@gmail.com', avatar : true, favourite : true, friend : true}];
+					return [{name: 'aldin', surname : 'mujkic', telephone : '061402801', email : 'aldinmujkic44@gmail.com', avatar : true, favourite : true, friend : true, is_existing: true}];
 				}
 			},
 			addNew : {
@@ -126,23 +124,53 @@
             this.$.dialog.toggle();
         },
         addName : function(){
-        	this.push('contacts',{
-        		name : this.addNew.name,
-        		surname : this.addNew.surname,
-        		telephone : this.addNew.telephone,
-        		email : this.addNew.email,
-        		avatar : this.addNew.avatar,
-        		favourite : this.addNew.favourite,
-        		friend : this.addNew.friend
-        	})
-        	this.addNew.name = 'rtshg';
-        	animated.close();
-        	console.log(this.contacts)
+        	animatedd.close();
+
+        	if (this.addNew.is_existing) {
+
+        		this.set('contacts.' + this.currentEditIndex, this.addNew);
+
+        		// NOTE - Next two lines are a fix, when the property wont update dom
+        		var old = JSON.stringify(this.contacts);
+        		this.set('contacts', JSON.parse(old));
+
+        	
+        		this.set('addNew', {});
+        		return;
+        	}
+
+        	this.addNew.is_existing = true;
+        	this.push('contacts', this.addNew);
+
+        	this.set('addNew', {});
         },
         deleteName : function(e){
         	var name = e.detail;
         	this.splice('contacts', this.contacts.indexOf(name), 1);
-        }
+        },
+        searchNames : function(){
+        	this.$.search.hidden = !this.$.search.hidden;
+        },
+        _isFavourite : function(contact){
+        	if (!contact.favourite) return false;
+        	return contact.name && ~contact.name;
+        },
+        _editName: function(e) {
+        	var contact = e.detail;
+        	var currentContantIndex = this.contacts.indexOf(contact);
+        	this.currentEditIndex = currentContantIndex;
+        	var currentContact = this.contacts[currentContantIndex];
+        	this.set('addNew', currentContact);
+        	this.$.animatedd.open();
+        },
+        _filter: function(val) {  
+  			return function(person) {
+    		if (!val) return true;
+    		if (!person) return false;
+    		return (person.name && ~person.name.indexOf(val));
+  			};
+		}
+		
 
 	})
 </script>

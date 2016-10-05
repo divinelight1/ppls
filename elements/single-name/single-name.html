@@ -48,12 +48,12 @@
 			{{contact.name}} {{contact.surname}} 
 		</paper-item>
 
-		<paper-icon-button icon="delete" title="delete item" onclick="modal.open()"></paper-icon-button>
+		<paper-icon-button icon="delete" title="delete item" on-click="removeName"></paper-icon-button>
 		<paper-dialog id="modal" modal>
   			<h4>Do You Really Want To Delete This Contact</h4>
   			<div class="buttons">
   				<paper-button dialog-confirm autofocus>Cancel</paper-button>
-    			<paper-button on-click="removeName">Confirm</paper-button>
+    			<paper-button on-click="removeNameConfirmed">Confirm</paper-button>
   			</div>
 		</paper-dialog>
 
@@ -62,10 +62,8 @@
   					<p class="detailItem"><span class="title">Telephone:</span> {{contact.telephone}}</p>
   					<p class="detailItem"><span class="title">Email:</span> {{contact.email}}</p>
 				
-				<paper-button raised onclick="editName.open()">open</paper-button>
-				<paper-dialog id="editName" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-  					<p><paper-input label="Name" value="{{name.name}}"></paper-input></p>
-				</paper-dialog>
+					<paper-button raised on-click="editName">open</paper-button>
+				
 				</div>
 			</iron-collapse>
 	</li>
@@ -74,7 +72,7 @@
 		Polymer ({
 			is : 'single-name',
 			properties : {
-				name : {
+				contact : {
 					type : "Object",
 					notify: true
 				}
@@ -83,11 +81,15 @@
 				this.$.collapse.toggle();
 			},
 			removeName : function(e){
-				this.fire('remove', this.name)
+				this.$.modal.open();				
 			},
-			editName : function(){
-        	
-        }
+			removeNameConfirmed: function() {
+				this.$.modal.close();	
+				this.fire('remove', this.contact)
+			},
+			editName : function(e){
+				this.fire('edit', this.contact);        		
+        	}
 		})
 	</script>
 </dom-module>
